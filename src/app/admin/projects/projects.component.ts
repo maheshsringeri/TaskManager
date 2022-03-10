@@ -81,7 +81,7 @@ export class ProjectsComponent implements OnInit {
   {
     this.editProject.projectID=this.projects[index].projectID;
     this.editProject.projectName=this.projects[index].projectName;
-    this.editProject.dateOfStart=this.projects[index].dateOfStart.split("/").reverse().join("-"); //yyyy-MM-dd
+    this.editProject.dateOfStart = this.projects[index].dateOfStart.split("/").reverse().join("-"); //yyyy-MM-dd
     this.editProject.teamSize=this.projects[index].teamSize;
     this.editProject.active=this.projects[index].active;
     this.editProject.status=this.projects[index].status;
