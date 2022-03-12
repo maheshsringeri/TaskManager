@@ -56,4 +56,9 @@ export class ProjectsService {
     return this.httpClient.get<Project[]>("api/projects/search/"+searchBy+"/"+searchText,{responseType:"json"});
   }
 
+  getProjectByProjectID(ProjectID:number):Observable<Project>
+  {
+    return this.httpClient.get<Project>("api/projects/searchbyprojectid/"+ProjectID,{responseType:"json"});
+  }
+
 }
