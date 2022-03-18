@@ -39,6 +39,7 @@ export class ProjectsComponent implements OnInit {
   
 
   ngOnInit(): void {
+    debugger;
     this.projectsService.getAllProjects().subscribe({
       next:(response:Project[])=>{
         this.projects=response;

@@ -14,8 +14,8 @@ export class LoginComponent implements OnInit {
   loginViewModel:LoginViewModel =new LoginViewModel();
   loginError:string="";
 
-  constructor(private loginService:LoginService,private router:Router,private jwtHelperService:JwtHelperService) 
-  { 
+  constructor(private loginService:LoginService,private router:Router,private jwtHelperService:JwtHelperService)
+  {
 
   }
 
@@ -29,12 +29,11 @@ export class LoginComponent implements OnInit {
 
   onLoginClick(event:any)
   {
-    debugger;
     this.loginService.Login(this.loginViewModel).subscribe({
       next:(response)=>{
-        var token=sessionStorage.getItem('currentUser')? JSON.parse(sessionStorage.getItem('currentUser') as string):null;
 
-        if(this.jwtHelperService.decodeToken(token).role=="Employee")
+        var token=sessionStorage.getItem('currentUser')? JSON.parse(sessionStorage.getItem('currentUser') as string):null;
+        if(token.role=="Employee")
           this.router.navigateByUrl("tasks");
         else
           this.router.navigateByUrl("dashboard");
