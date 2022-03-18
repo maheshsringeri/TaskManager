@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { LoginViewModel } from '../login-view-model';
@@ -14,19 +14,30 @@ export class LoginComponent implements OnInit {
   loginViewModel:LoginViewModel =new LoginViewModel();
   loginError:string="";
 
-  constructor(private loginService:LoginService,private router:Router) 
+  constructor(private loginService:LoginService,private router:Router,private jwtHelperService:JwtHelperService) 
   { 
 
   }
 
+  @ViewChild("userName") userName:ElementRef|any=null;
+
   ngOnInit(): void {
+    setTimeout(() => {
+      this.userName.nativeElement.focus();
+    }, 500);
   }
 
   onLoginClick(event:any)
   {
+    debugger;
     this.loginService.Login(this.loginViewModel).subscribe({
       next:(response)=>{
-        this.router.navigateByUrl("dashboard");
+        var token=sessionStorage.getItem('currentUser')? JSON.parse(sessionStorage.getItem('currentUser') as string):null;
+
+        if(this.jwtHelperService.decodeToken(token).role=="Employee")
+          this.router.navigateByUrl("tasks");
+        else
+          this.router.navigateByUrl("dashboard");
       },
       error:(error)=>{
         console.log(error);

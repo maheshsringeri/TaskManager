@@ -18,6 +18,7 @@ import { TasksComponent } from './tasks/tasks.component';
     LoginComponent,
     SignupComponent,
     TasksComponent
+    
   ],
   imports: [
     BrowserModule,

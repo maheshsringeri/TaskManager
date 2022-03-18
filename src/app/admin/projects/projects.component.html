@@ -3,63 +3,55 @@
 </h5>
 <div class="row">
     <div class="col-sm-10 mx-auto">
-        <div class="row mb-3">
-          <div class="col-sm-2">
-            <button type="button" class="btn btn-primary btn-sm " data-bs-toggle="modal" data-bs-target="#AddModal" (click)="onNewClick($event)">
-              Create New Project
-            </button>
-          </div>
-          <label for="drpSearchBy" class="col-sm-2 col-form-label text-end">Search By</label>
-          <div class="col-sm-3">
-            <select id="drpSearchBy" class="form-select form-select-sm" name="SearchBy" [(ngModel)]="searchBy" >
-                <option value="ProjectID" >Project ID</option>
-                <option value="ProjectName" >Project Name</option>
-                <option value="DateOfStart" >Date Of Start</option>
-                <option value="TeamSize" >Team Size</option>
-            </select>
-          </div>
-          <label for="textSearchText" class="col-sm-1 col-form-label text-end">Search:</label>
-          <div class="col-sm-4">
-            <div class="input-group">
-              <input
-                type="text"
-                class="form-control form-select-sm"
-                id="txtSearchText"
-                name="SearchText"
-                [(ngModel)]="searchText"
-              />
-              <div class="input-group-append" (click)="onSearchClick()">
-                <span class="input-group-text"><i class="fa fa-search"></i></span>
-              </div>
+      <div class="row mb-3">
+        <label for="drpSearchBy" class="col-sm-2 col-form-label text-end">Search By</label>
+        <div class="col-sm-4">
+          <select id="drpSearchBy" class="form-select form-select-sm" name="SearchBy" [(ngModel)]="searchBy" >
+              <option value="ProjectID" >Project ID</option>
+              <option value="ProjectName" >Project Name</option>
+              <option value="DateOfStart" >Date Of Start</option>
+              <option value="TeamSize" >Team Size</option>
+          </select>
+        </div>
+        <label for="textSearchText" class="col-sm-2 col-form-label text-end">Search:</label>
+        <div class="col-sm-4">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control form-select-sm"
+              id="txtSearchText"
+              name="SearchText"
+              [(ngModel)]="searchText"
+            />
+            <div class="input-group-append" (click)="onSearchClick()">
+              <span class="input-group-text"><i class="fa fa-search"></i></span>
             </div>
           </div>
         </div>
-    </div>
-    <div class="col-sm-10 mx-auto">
-        <table class="table">
-            <thead>
-                <th>Project ID</th>
-                <th>Project Name</th>
-                <th>Date Of Start</th>
-                <th>Team Size</th>
-                <th>Client Location</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </thead>
-            <tbody>
-            <tr *ngFor="let project of projects;let i=index" [ngClass]="{'text-muted':!project.active}" >
-                <td>{{project.projectID}} </td>
-                <td>{{project.projectName}} </td>
-                <td>{{project.dateOfStart}} </td>
-                <td>{{project.teamSize}} </td>
-                <td>{{project.clientLocation.clientLocationName}}</td>
-                <td>{{project.status}} </td>
-                <td><button class="btn btn-info btn-sm" (click)="onEditClick($event,i)" data-bs-toggle="modal" data-bs-target="#EditModal">Edit</button> 
-                    &nbsp;<button class="btn btn-warning btn-sm" (click)="onDeleteClick($event,i)" data-bs-toggle="modal" data-bs-target="#DeleteModal">Delete</button> 
-                </td>
-            </tr>
-          </tbody>
-        </table>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-2">
+          <button type="button" class="btn btn-primary btn-sm " data-bs-toggle="modal" data-bs-target="#AddModal" (click)="onNewClick($event)">
+            Create New Project
+          </button>
+        </div>
+        <div class="col-sm-2">
+          <button type="button" class="btn btn-secondary btn-sm" (click)="onHideShowDetails($event)" >Hide/Show Details </button>
+        </div>
+        <div class="col-sm-8">
+          <input type="checkbox" id="isAllChecked" name="isAllChecked" value="true" 
+              [(ngModel)]="isAllChecked" (change)="isAllCheckedChange($event)" class="custom-control-input"  >
+              <label for="isAllCheckedChange" class="custom-control-label">Select All</label>
+        </div>
+      </div>
+      <div class="row mb-3" >
+        <div class="col-md-4" *ngFor="let project of projects;let i=index" >
+          <app-project #prj [currentProject]="project" [recordIndex]="i" (editClick)="onEditClick($event, i)" (deleteClick)="onDeleteClick($event, i)"  >
+            <app-check-box-printer #selectionBox></app-check-box-printer>
+            <app-check-box-printer #selectionBox></app-check-box-printer>
+          </app-project>
+        </div>
+      </div>
     </div>
 </div>
 
@@ -74,9 +66,9 @@
         </div>
         <div class="modal-body">
             <div class="form-group row mb-3">
-                <label for="txtNewProjectId" class="col-sm-3 col-form-lable">Project ID</label>
+                <label for="txtNewProjectId"  class="col-sm-3 col-form-lable">Project ID</label>
                 <div class="col-sm-9">
-                    <input type="text" [(ngModel)]="newProject.projectID" name="ProjectID" id="txtNewProjectId" class="form-control"
+                    <input type="text" [(ngModel)]="newProject.projectID" name="ProjectID" id="txtNewProjectId"  #prjID class="form-control"
                       placeholder="Project ID" #newProjectID="ngModel" required="required" pattern="^[0-9]*$"  appProjectIDUniqueValidator 
                       [ngClass]="{'is-invalid': newProjectID.invalid && ( newProjectID.touched || newProjectID.dirty || newForm.submitted),
                                   'is-valid': newProjectID.valid &&( newProjectID.touched || newProjectID.dirty || newForm.submitted )
@@ -94,7 +86,7 @@
             <div class="form-group row mb-3">
               <label for="txtNewProjectName" class="col-sm-3 col-form-lable">Project Name</label>
               <div class="col-sm-9">
-                  <input type="text" [(ngModel)]="newProject.projectName" name="ProjectName" id="txtNewProjectName" class="form-control" 
+                  <input type="text"  [(ngModel)]="newProject.projectName" name="ProjectName" id="txtNewProjectName" class="form-control" 
                     placeholder="Project Name" #newProjectName="ngModel" required="required" pattern="^[A-Za-Z0-9 /-]*$" minlength="3" maxlength="30"
                     [ngClass]="{'is-invalid': newProjectName.invalid && (newProjectName.touched || newProjectName.dirty || newForm.submitted),
                                 'is-valid':newProjectName.valid && (newProjectName.touched || newProjectName.dirty ||newForm.submitted)
@@ -226,7 +218,7 @@
               <div class="form-group row mb-3">
                 <label for="txtEditProjectName" class="col-sm-3 col-form-lable">Project Name</label>
                 <div class="col-sm-9">
-                    <input type="text" [(ngModel)]="editProject.projectName" name="ProjectName" id="txtEditProjectName" class="form-control" 
+                    <input type="text" #prjEName [(ngModel)]="editProject.projectName" name="ProjectName" id="txtEditProjectName" class="form-control" 
                         placeholder="Project Name" #editProjectName="ngModel" required="required" pattern="^[A-Za-Z0-9 /-]*$" minlength="3" maxlength="30"
                         [ngClass]="{'is-invalid': editProjectName.invalid && (editProjectName.touched || editProjectName.dirty || editForm.submitted),
                                     'is-valid':editProjectName.valid && (editProjectName.touched || editProjectName.dirty ||editForm.submitted)

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ProjectsService } from 'src/app/projects.service';
 import { Project } from 'src/app/project';
 import { Subscriber } from 'rxjs';
@@ -6,6 +6,8 @@ import { ClientLocation } from 'src/app/client-location';
 import { ClientLocationsService } from 'src/app/client-locations.service';
 import { NgForm } from '@angular/forms';
 import * as $ from "jquery";
+import { ProjectComponent } from '../project/project.component';
+
 
 @Component({
   selector: 'app-projects',
@@ -27,6 +29,7 @@ export class ProjectsComponent implements OnInit {
   searchText:string="";
   @ViewChild("newForm") newForm: NgForm | any = null;
   @ViewChild("editForm") editForm: NgForm | any = null;
+  
 
   constructor(private projectsService:ProjectsService,private clientLocationsService:ClientLocationsService) 
   { 
@@ -87,6 +90,7 @@ export class ProjectsComponent implements OnInit {
     }
   }
 
+  @ViewChild("prjEName") prjEName:ElementRef|any=null;
   onEditClick(event:any,index:number)
   {
     this.editForm.resetForm();
@@ -102,7 +106,10 @@ export class ProjectsComponent implements OnInit {
       this.editProject.clientLocation=this.projects[index].clientLocation;
 
       this.editIndex=index;
-    }, 100);
+      
+      this.prjEName.nativeElement.focus();
+
+    }, 500);
   }
 
   onUpdateClick()
@@ -180,9 +187,41 @@ export class ProjectsComponent implements OnInit {
     });
   }
 
+  
+  @ViewChild("prjID") prjID: ElementRef | any = null;
   onNewClick(event:any)
   {
     this.newForm.resetForm();
+    setTimeout(() => {
+      this.prjID.nativeElement.focus();
+    }, 500);
   }
+
+  onHideShowDetails(event:any)
+  {
+    this.projectsService.toggleDetails();
+      
+  }
+
+  
+
+  @ViewChildren("prj") prj : QueryList<ProjectComponent> | any = null;
+
+  isAllChecked:boolean=false;
+  isAllCheckedChange(event:any)
+  {
+    debugger;
+    let prjs=this.prj.toArray();
+    for(let i=0;i<prjs.length;i++)
+    {
+      prjs[i].isAllCheckedChange(this.isAllChecked);
+    }
+  }
+
+
+  
+
+  
+
 
 }
