@@ -1,12 +1,13 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ProjectsService } from 'src/app/projects.service';
 import { Project } from 'src/app/project';
-import { Subscriber } from 'rxjs';
+import { Observable, Subscriber } from 'rxjs';
 import { ClientLocation } from 'src/app/client-location';
 import { ClientLocationsService } from 'src/app/client-locations.service';
 import { NgForm } from '@angular/forms';
 import * as $ from "jquery";
 import { ProjectComponent } from '../project/project.component';
+import { FilterPipe } from 'src/app/filter.pipe';
 
 
 @Component({
@@ -14,10 +15,11 @@ import { ProjectComponent } from '../project/project.component';
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss']
 })
-export class ProjectsComponent implements OnInit {
+export class ProjectsComponent implements OnInit 
+{
 
   projects:Project[]=[];
-  clientLocations:ClientLocation[]=[];
+  clientLocations:Observable<ClientLocation[]>|any;
   showLoading:boolean=true;
 
   newProject:Project=new Project();
@@ -25,8 +27,13 @@ export class ProjectsComponent implements OnInit {
   editIndex:number=0;
   deleteProject:Project=new Project();
   deleteIndex:number=0;
-  searchBy:string="ProjectName";
+  searchBy:string="projectName";
   searchText:string="";
+
+  currentPageIndex:number=0;
+  pageSize:number=3;
+  pages:any[]=[];
+
   @ViewChild("newForm") newForm: NgForm | any = null;
   @ViewChild("editForm") editForm: NgForm | any = null;
   
@@ -39,19 +46,15 @@ export class ProjectsComponent implements OnInit {
   
 
   ngOnInit(): void {
-    debugger;
     this.projectsService.getAllProjects().subscribe({
       next:(response:Project[])=>{
         this.projects=response;
         this.showLoading=false;
+        this.calculateNoOfPages();
       }
     });
 
-    this.clientLocationsService.getClientLocations().subscribe({
-      next:(response)=>{
-        this.clientLocations=response;
-      }
-    });
+    this.clientLocations=this.clientLocationsService.getClientLocations();
   }
 
   onSaveClick()
@@ -82,6 +85,7 @@ export class ProjectsComponent implements OnInit {
                   this.newProject.clientLocationID=null;
                   
                   $("#newFormCancel").trigger("click");
+                  this.calculateNoOfPages();
                 },
             error: (error)=>{
                 console.log(error);
@@ -156,6 +160,8 @@ export class ProjectsComponent implements OnInit {
       this.deleteProject.projectName=this.projects[index].projectName;
       this.deleteProject.dateOfStart=this.projects[index].dateOfStart;
       this.deleteProject.teamSize=this.projects[index].teamSize;
+
+      this.calculateNoOfPages();
   }
 
   onDeleteConfirmClick()
@@ -178,14 +184,19 @@ export class ProjectsComponent implements OnInit {
 
   onSearchClick()
   {
-    this.projectsService.searchProjects(this.searchBy,this.searchText).subscribe({
-      next:(response:Project[])=>{
-        this.projects=response;
-      },
-      error:(error)=>{
-        console.log(error);
-      }
-    });
+    // this.projectsService.searchProjects(this.searchBy,this.searchText).subscribe({
+    //   next:(response:Project[])=>{
+    //     this.projects=response;
+    //   },
+    //   error:(error)=>{
+    //     console.log(error);
+    //   }
+    // });
+  }
+
+  onSearchTextKeyup(event:any)
+  {
+    this.calculateNoOfPages();
   }
 
   
@@ -211,7 +222,6 @@ export class ProjectsComponent implements OnInit {
   isAllChecked:boolean=false;
   isAllCheckedChange(event:any)
   {
-    debugger;
     let prjs=this.prj.toArray();
     for(let i=0;i<prjs.length;i++)
     {
@@ -220,8 +230,28 @@ export class ProjectsComponent implements OnInit {
   }
 
 
-  
+  calculateNoOfPages()
+  {
+    let filterPipe=new FilterPipe();
+    var resultProjects=filterPipe.transform(this.projects,this.searchBy,this.searchText);
 
+    var noOfPages=Math.ceil(resultProjects.length/this.pageSize);
+
+    this.pages=[];
+
+    for(let i=0;i<noOfPages;i++)
+    {
+      this.pages.push({pageIndex:i});
+    }
+
+    this.currentPageIndex=0;
+
+  }
+
+  onPageIndexClicked(pageIndex:number)
+  {
+    this.currentPageIndex=pageIndex;
+  }
   
 
 

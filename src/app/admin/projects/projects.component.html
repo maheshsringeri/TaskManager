@@ -7,10 +7,10 @@
         <label for="drpSearchBy" class="col-sm-2 col-form-label text-end">Search By</label>
         <div class="col-sm-4">
           <select id="drpSearchBy" class="form-select form-select-sm" name="SearchBy" [(ngModel)]="searchBy" >
-              <option value="ProjectID" >Project ID</option>
-              <option value="ProjectName" >Project Name</option>
-              <option value="DateOfStart" >Date Of Start</option>
-              <option value="TeamSize" >Team Size</option>
+              <option value="projectID" >Project ID</option>
+              <option value="projectName" >Project Name</option>
+              <option value="dateOfStart" >Date Of Start</option>
+              <option value="teamSize" >Team Size</option>
           </select>
         </div>
         <label for="textSearchText" class="col-sm-2 col-form-label text-end">Search:</label>
@@ -22,10 +22,11 @@
               id="txtSearchText"
               name="SearchText"
               [(ngModel)]="searchText"
+              (keyup)="onSearchTextKeyup($event)"
             />
-            <div class="input-group-append" (click)="onSearchClick()">
+            <!-- <div class="input-group-append" (click)="onSearchClick()">
               <span class="input-group-text"><i class="fa fa-search"></i></span>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -45,11 +46,21 @@
         </div>
       </div>
       <div class="row mb-3" >
-        <div class="col-md-4" *ngFor="let project of projects;let i=index" >
+        <div class="col-md-4 mb-1 projectcard" *ngFor="let project of projects|filter:searchBy:searchText | paging : currentPageIndex : pageSize;let i=index" >
           <app-project #prj [currentProject]="project" [recordIndex]="i" (editClick)="onEditClick($event, i)" (deleteClick)="onDeleteClick($event, i)"  >
             <app-check-box-printer #selectionBox></app-check-box-printer>
-            <app-check-box-printer #selectionBox></app-check-box-printer>
           </app-project>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <nav aria-label="...">
+            <ul class="pagination justify-content-center pagination-sm">
+              <li *ngFor="let page of pages" (click)="onPageIndexClicked(page.pageIndex)" [ngClass]="{'active':page.pageIndex == currentPageIndex}" class="page-item">
+                <span class="page-link" >{{page.pageIndex + 1}}</span>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </div>
@@ -166,7 +177,7 @@
                                 'is-valid':newClientLocationID.valid && (newClientLocationID.touched || newClientLocationID.dirty || newForm.submitted)
                               }" >
                       <option value="null">Please Select</option>
-                      <option *ngFor="let clientLocation of clientLocations" [value]="clientLocation.clientLocationID" >
+                      <option *ngFor="let clientLocation of clientLocations | async" [value]="clientLocation.clientLocationID" >
                         {{clientLocation.clientLocationName}} 
                       </option>
                 </select>
