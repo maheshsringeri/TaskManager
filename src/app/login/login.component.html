@@ -1,9 +1,10 @@
 <form>
-    <div class="row">
+    <div class="row mt-3">
         <div class="col-lg-6 col-xl-5 col-md-9 mx-auto">
             <div class="card text-center">
                 <div class="card-header bg-secondary text-start">
                   <h3>Login </h3>
+                  <div appAlert [error]="loginError" *ngIf="loginError"></div>
                 </div>
                 <div class="card-body ">
                     <div class="mb-3 mt-3 text-start">
@@ -18,8 +19,19 @@
                 </div>
                 </div>
                 <div class="card-footer text-muted text-end">
-                    <span class="text-danger">{{loginError}} &nbsp;</span>
+                    <!-- <span class="text-danger">{{loginError}} &nbsp;</span> -->
                     <button class="btn btn-primary" (click)="onLoginClick($event)" >Login</button>
+                    <div *appRepeater="4;let i" class="text-start" >
+                        <a class="btn btn-primary" data-bs-toggle="collapse" [href]="'#collapseExample'+i" role="button" 
+                            aria-expanded="false" aria-controls="collapseExample">
+                            View {{i}}
+                        </a>
+                        <div class="collapse" [id]="'collapseExample'+i">
+                        <div class="card card-body">
+                            Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                        </div>
+                        </div>
+                    </div>
                 </div>
               </div>
         </div>

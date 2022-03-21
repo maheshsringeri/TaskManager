@@ -12,7 +12,7 @@ import { LoginService } from '../login.service';
 export class LoginComponent implements OnInit {
 
   loginViewModel:LoginViewModel =new LoginViewModel();
-  loginError:string="";
+  loginError: string = "";
 
   constructor(private loginService:LoginService,private router:Router,private jwtHelperService:JwtHelperService)
   {
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       },
       error:(error)=>{
         console.log(error);
-        this.loginError="Invalid Username or Password";
+        this.loginError = "Invalid Username or Password";
       }
     });
   }
