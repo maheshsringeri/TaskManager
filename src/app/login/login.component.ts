@@ -34,9 +34,10 @@ export class LoginComponent implements OnInit {
 
         var token=sessionStorage.getItem('currentUser')? JSON.parse(sessionStorage.getItem('currentUser') as string):null;
         if(token.role=="Employee")
-          this.router.navigateByUrl("tasks");
+          this.router.navigateByUrl("/employee/tasks");
         else
-          this.router.navigateByUrl("dashboard");
+          //this.router.navigateByUrl("/admin/dashboard");
+          this.router.navigate(['/admin','dashboard']);
       },
       error:(error)=>{
         console.log(error);

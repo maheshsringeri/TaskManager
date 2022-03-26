@@ -15,6 +15,7 @@ export class ProjectComponent implements OnChanges,OnInit,DoCheck,
 
   @Input("currentProject") project:Project|any=null;
   @Input("recordIndex") i:number=0;
+  @Input("currPageIndex") currPageIndex:number=0;
 
   @Output() editClick = new EventEmitter();
   @Output() deleteClick = new EventEmitter();

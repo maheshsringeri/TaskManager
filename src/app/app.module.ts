@@ -10,24 +10,23 @@ import { JwtIntercepterService } from './jwt-intercepter.service';
 import { JwtUnAuthorizedIntercepterService } from './jwt-un-authorized-intercepter.service';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
-import { TasksComponent } from './tasks/tasks.component';
 import { AlertDirective } from './alert.directive';
 import { RepeaterDirective } from './repeater.directive';
+import { EmployeeModule } from './employee/employee.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
-    TasksComponent,
     AlertDirective,
     RepeaterDirective
-    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AdminModule,
+    EmployeeModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,

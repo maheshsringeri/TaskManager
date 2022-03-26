@@ -1,13 +1,15 @@
-import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ProjectsService } from 'src/app/projects.service';
 import { Project } from 'src/app/project';
-import { Observable, Subscriber } from 'rxjs';
+import { Observable, Subscriber, Subscription } from 'rxjs';
 import { ClientLocation } from 'src/app/client-location';
 import { ClientLocationsService } from 'src/app/client-locations.service';
 import { NgForm } from '@angular/forms';
 import * as $ from "jquery";
 import { ProjectComponent } from '../project/project.component';
 import { FilterPipe } from 'src/app/filter.pipe';
+import { ActivatedRoute } from '@angular/router';
+import { RouterLoggerService } from 'src/app/router-logger.service';
 
 
 @Component({
@@ -15,7 +17,7 @@ import { FilterPipe } from 'src/app/filter.pipe';
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss']
 })
-export class ProjectsComponent implements OnInit 
+export class ProjectsComponent implements OnInit,OnDestroy 
 {
 
   projects:Project[]=[];
@@ -33,12 +35,14 @@ export class ProjectsComponent implements OnInit
   currentPageIndex:number=0;
   pageSize:number=3;
   pages:any[]=[];
+  routParamSubscription:Subscription|any =null;
 
   @ViewChild("newForm") newForm: NgForm | any = null;
   @ViewChild("editForm") editForm: NgForm | any = null;
   
 
-  constructor(private projectsService:ProjectsService,private clientLocationsService:ClientLocationsService) 
+  constructor(private projectsService:ProjectsService,private clientLocationsService:ClientLocationsService,
+          private activatedRoute:ActivatedRoute) 
   { 
 
   }
@@ -46,15 +50,25 @@ export class ProjectsComponent implements OnInit
   
 
   ngOnInit(): void {
+
     this.projectsService.getAllProjects().subscribe({
       next:(response:Project[])=>{
         this.projects=response;
         this.showLoading=false;
         this.calculateNoOfPages();
+
+        this.routParamSubscription=this.activatedRoute.params.subscribe((param)=>{
+                      this.currentPageIndex=param["pageindex"];
+                    });
       }
     });
 
     this.clientLocations=this.clientLocationsService.getClientLocations();
+    
+  }
+
+  ngOnDestroy(): void {
+    this.routParamSubscription.unsubscribe();
   }
 
   onSaveClick()

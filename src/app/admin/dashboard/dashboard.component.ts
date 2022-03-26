@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from 'src/app/login.service';
 import { DashboardService } from '../../dashboard.service';
 
 
@@ -54,7 +55,6 @@ export class DashboardComponent implements OnInit {
    this.TeamMembersSummary=this.dashboardService.getTeamMembersSummary();
    
    this.TeamMembers=this.dashboardService.getTeamMembers();
-
   }
 
   OnProjectChange($event:any){

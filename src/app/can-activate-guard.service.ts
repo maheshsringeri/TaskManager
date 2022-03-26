@@ -27,7 +27,7 @@ canActivate(route:ActivatedRouteSnapshot ): boolean
   }
   else
   {
-    this.router.navigate(["login"]);
+    this.router.navigate(["/login"]);
     return false;
   }
 }

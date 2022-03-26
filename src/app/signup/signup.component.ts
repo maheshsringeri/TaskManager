@@ -6,18 +6,22 @@ import { CustomValidatorsService } from '../custom-validators.service';
 import { LoginService } from '../login.service';
 import { SignUpViewModel } from '../sign-up-view-model';
 import { Router } from '@angular/router';
+import { CanComponentDeactivate } from '../can-deactive-guard.service';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit,CanComponentDeactivate
+{
 
   signUpForm:FormGroup | any = null;
   genders=["male","female"];
   countries:Country[]=[];
   registerError:string|null=null;
+
+  canLeave: boolean=true;
 
   constructor(private countriesService:CountriesService,private formBuilder:FormBuilder,
           private customValidatorsService:CustomValidatorsService,
@@ -55,10 +59,13 @@ export class SignupComponent implements OnInit {
 
 
     this.signUpForm.valueChanges.subscribe((value:any)=>{
-     // console.log(value);
+     
+      this.canLeave=false;
     });
     
+
   }
+
 
   onSubmitClick()
   {

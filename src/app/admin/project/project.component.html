@@ -20,6 +20,7 @@
     </div>
     <div class="card-footer text-muted">
       <button class="btn btn-info" (click)="onEditClick($event,i)" data-bs-toggle="modal" data-bs-target="#EditModal" >Edit</button>&nbsp;
-      <button class="btn btn-warning" (click)="onDeleteClick($event,i)"  data-bs-toggle="modal" data-bs-target="#DeleteModal" >Delete</button>
+      <button class="btn btn-warning" (click)="onDeleteClick($event,i)"  data-bs-toggle="modal" data-bs-target="#DeleteModal" >Delete</button>&nbsp;
+      <a class="btn btn-primary" [routerLink]="['/admin','projects','view',project.projectID,currPageIndex]">Learn More...</a>
     </div>
   </div>

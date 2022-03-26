@@ -47,7 +47,8 @@
       </div>
       <div class="row mb-3" >
         <div class="col-md-4 mb-1 projectcard" *ngFor="let project of projects|filter:searchBy:searchText | paging : currentPageIndex : pageSize;let i=index" >
-          <app-project #prj [currentProject]="project" [recordIndex]="i" (editClick)="onEditClick($event, i)" (deleteClick)="onDeleteClick($event, i)"  >
+          <app-project #prj [currentProject]="project" [recordIndex]="i" [currPageIndex]="currentPageIndex"
+             (editClick)="onEditClick($event, i)" (deleteClick)="onDeleteClick($event, i)"  >
             <app-check-box-printer #selectionBox></app-check-box-printer>
           </app-project>
         </div>
