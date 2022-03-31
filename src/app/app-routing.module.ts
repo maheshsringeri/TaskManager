@@ -7,9 +7,9 @@ import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
         {path:"",redirectTo:"login",pathMatch:"full"},
-        {path:"login",component:LoginComponent },
-        {path:"signup",component:SignupComponent,canDeactivate:[CanDeactiveGuardService]},
-        {path:"about",component:AboutComponent}
+        {path:"login",component:LoginComponent,data:{linkIndex:2} },
+        {path:"signup",component:SignupComponent,canDeactivate:[CanDeactiveGuardService],data:{linkIndex:3}},
+        {path:"about",component:AboutComponent,data:{linkIndex:1}}
 
 ];
 

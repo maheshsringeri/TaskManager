@@ -13,6 +13,7 @@ import { SignupComponent } from './signup/signup.component';
 import { AlertDirective } from './alert.directive';
 import { RepeaterDirective } from './repeater.directive';
 import { EmployeeModule } from './employee/employee.module';
+import{BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { EmployeeModule } from './employee/employee.module';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     AdminModule,
     EmployeeModule,

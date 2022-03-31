@@ -2,13 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from './login.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RouterLoggerService } from './router-logger.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { AnonymousSubject } from 'rxjs/internal/Subject';
+import { fadeAnimation,keyFrameAnimation,slideLeftOrRightAnimation,slideUpAnimation, zoomLeftAnimation, zoomUpAnimation } from './my-animations';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  animations:[keyFrameAnimation]
+
+  
 })
 export class AppComponent implements OnInit
 {
@@ -35,4 +40,10 @@ export class AppComponent implements OnInit
     
   }
   
+  getState(outlet:RouterOutlet)
+  {
+    return outlet.isActivated ? 
+      outlet.activatedRoute.snapshot.url[0].path && outlet.activatedRouteData["linkIndex"]  : "none";
+  }
+
 }
