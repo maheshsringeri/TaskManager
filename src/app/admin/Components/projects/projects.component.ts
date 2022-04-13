@@ -1,15 +1,15 @@
 import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { ProjectsService } from 'src/app/projects.service';
-import { Project } from 'src/app/project';
+import { ProjectsService } from 'src/app/services/projects.service';
+import { Project } from 'src/app/models/project';
 import { Observable, Subscriber, Subscription } from 'rxjs';
-import { ClientLocation } from 'src/app/client-location';
-import { ClientLocationsService } from 'src/app/client-locations.service';
+import { ClientLocation } from 'src/app/models/client-location';
+import { ClientLocationsService } from 'src/app/services/client-locations.service';
 import { NgForm } from '@angular/forms';
 import * as $ from "jquery";
 import { ProjectComponent } from '../project/project.component';
-import { FilterPipe } from 'src/app/filter.pipe';
+import { FilterPipe } from 'src/app/pipes/filter.pipe';
 import { ActivatedRoute } from '@angular/router';
-import { RouterLoggerService } from 'src/app/router-logger.service';
+import { RouterLoggerService } from 'src/app/services/router-logger.service';
 
 
 @Component({

@@ -1,11 +1,11 @@
 import { HttpClient,HttpBackend } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LoginViewModel} from './login-view-model';
+import { LoginViewModel} from './../models/login-view-model';
 import { map } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
-import { SignUpViewModel } from './sign-up-view-model';
+import { SignUpViewModel } from './../models/sign-up-view-model';
 
 @Injectable({
   providedIn: 'root'

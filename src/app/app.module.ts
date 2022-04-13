@@ -6,14 +6,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AdminModule } from './admin/admin.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { JwtIntercepterService } from './jwt-intercepter.service';
-import { JwtUnAuthorizedIntercepterService } from './jwt-un-authorized-intercepter.service';
-import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
-import { AlertDirective } from './alert.directive';
-import { RepeaterDirective } from './repeater.directive';
+import { JwtIntercepterService } from './interceptors/jwt-intercepter.service';
+import { JwtUnAuthorizedIntercepterService } from './interceptors/jwt-un-authorized-intercepter.service';
+import { LoginComponent } from './components/login/login.component';
+import { SignupComponent } from './components/signup/signup.component';
+import { AlertDirective } from './directives/alert.directive';
+import { RepeaterDirective } from './directives/repeater.directive';
 import { EmployeeModule } from './employee/employee.module';
 import{BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -27,11 +28,8 @@ import{BrowserAnimationsModule} from '@angular/platform-browser/animations';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    AdminModule,
     EmployeeModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
+    SharedModule,
     JwtModule.forRoot({
       config:{
         tokenGetter:()=>{

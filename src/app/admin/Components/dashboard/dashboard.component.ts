@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from 'src/app/login.service';
-import { DashboardService } from '../../dashboard.service';
+import { LoginService } from 'src/app/services/login.service';
+import { DashboardService } from '../../../services/dashboard.service';
 
 
 @Component({

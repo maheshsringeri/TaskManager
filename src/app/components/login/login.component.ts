@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { LoginViewModel } from '../login-view-model';
-import { LoginService } from '../login.service';
+import { LoginViewModel } from '../../models/login-view-model';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-login',

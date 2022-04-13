@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TasksComponent } from './tasks/tasks.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TasksComponent } from './Components/tasks/tasks.component';
 import { EmployeeRoutingModule } from './employee-routing/employee-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -11,10 +10,8 @@ import { EmployeeRoutingModule } from './employee-routing/employee-routing.modul
     TasksComponent
   ],
   imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    EmployeeRoutingModule
+    EmployeeRoutingModule,
+    SharedModule
   ],
   exports:[TasksComponent]
 

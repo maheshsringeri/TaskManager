@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from './login.service';
+import { LoginService } from './services/login.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { RouterLoggerService } from './router-logger.service';
+import { RouterLoggerService } from './services/router-logger.service';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { AnonymousSubject } from 'rxjs/internal/Subject';
 import { fadeAnimation,keyFrameAnimation,slideLeftOrRightAnimation,slideUpAnimation, zoomLeftAnimation, zoomUpAnimation } from './my-animations';
