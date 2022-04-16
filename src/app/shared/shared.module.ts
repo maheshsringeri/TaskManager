@@ -8,6 +8,7 @@ import { NumberToWordsPipe } from '../pipes/number-to-words.pipe';
 import { PagingPipe } from '../pipes/paging.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ComponentLoaderDirective } from '../directives/component-loader.directive';
 
 
 
@@ -18,13 +19,14 @@ import { HttpClientModule } from '@angular/common/http';
     TeamSizeValidatorDirective,
     FilterPipe,
     NumberToWordsPipe,
-    PagingPipe
+    PagingPipe,
+    ComponentLoaderDirective
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   exports:[
     CommonModule,
@@ -37,7 +39,8 @@ import { HttpClientModule } from '@angular/common/http';
     TeamSizeValidatorDirective,
     FilterPipe,
     NumberToWordsPipe,
-    PagingPipe
+    PagingPipe,
+    ComponentLoaderDirective
   ]
 
 })

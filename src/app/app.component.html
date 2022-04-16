@@ -18,6 +18,9 @@
           <li class="nav-item" *ngIf="loginService.currentUserName!=null && loginService.currentUserName=='admin'">
             <a class="nav-link" [routerLink]="['/admin','projects',0]">Projects</a>
           </li>
+          <li class="nav-item" *ngIf="loginService.currentUserName!=null && loginService.currentUserName=='admin'">
+            <a class="nav-link" [routerLink]="['/admin','masters']">Masters</a>
+          </li>
           <li class="nav-item" *ngIf="loginService.currentUserName!=null">
             <a class="nav-link" (click)="loginService.Logout()" >Logout</a>
           </li>
