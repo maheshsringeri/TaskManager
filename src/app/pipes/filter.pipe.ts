@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Project } from './../models/project';
 
 @Pipe({
   name: 'filter',
@@ -7,7 +6,7 @@ import { Project } from './../models/project';
 })
 export class FilterPipe implements PipeTransform {
 
-  transform(value: Project[]|any,searchBy:string,searchText:string): any {
+  transform(value: any,searchBy:string,searchText:string): any {
     if (value == null)
     {
       return value;
