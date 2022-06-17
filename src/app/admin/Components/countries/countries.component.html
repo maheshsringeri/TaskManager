@@ -54,8 +54,8 @@
                 <tr *ngFor="let country of countries | filter:searchBy:searchText | sort: sortBy: sortOrder | paging:currentPageIndex:pageSize;let i = index" >
                     <td>{{country.countryName}}</td>
                     <td >
-                       <button class="btn btn-info" data-bs-toggle="modal" (click)="onEditClick($event,country)" data-bs-target="#editCountryModal">Edit</button>&nbsp;
-                      <button class="btn btn-warning" data-bs-toggle="modal" (click)="onDeleteClick($event,country)"
+                       <button class="btn btn-info btn-sm" data-bs-toggle="modal" (click)="onEditClick($event,country)" data-bs-target="#editCountryModal">Edit</button>&nbsp;
+                      <button class="btn btn-warning btn-sm" data-bs-toggle="modal" (click)="onDeleteClick($event,country)"
                         data-bs-target="#deleteCountryModal">Delete</button>
                     </td>
                 </tr>
