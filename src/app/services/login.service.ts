@@ -18,6 +18,7 @@ export class LoginService {
   }
 
   currentUserName:any=null;
+  currentUserRole:any=null;
 
   public Login(loginViewModel:LoginViewModel):Observable<any>
   {
@@ -27,12 +28,24 @@ export class LoginService {
           if(response)
           {
             this.currentUserName=response.body.userName; 
+            this.currentUserRole=response.body.role;
             sessionStorage['currentUser']=JSON.stringify(response.body);
             sessionStorage['XSRFRequestToken'] = response.headers.get("XSRF-REQUEST-TOKEN");
           }
           return response.body;
         }));
   }
+
+  public detectIfAlreadyLoggedIn()
+  {
+    if(this.jwtHelperService.isTokenExpired()==false)
+    {
+      var currentUser=JSON.parse(sessionStorage['currentUser']);
+      this.currentUserName=currentUser.userName;
+      this.currentUserRole=currentUser.role;
+    }
+  }
+
 
   public Register(signUpViewModel:SignUpViewModel):Observable<any>
   {

@@ -25,6 +25,8 @@ export class AppComponent implements OnInit
   }
 
   ngOnInit(): void {
+    this.loginService.detectIfAlreadyLoggedIn();
+    
     this.router.events.subscribe((event)=>{
       if(event instanceof NavigationEnd)
       {

@@ -32,12 +32,11 @@ export class LoginComponent implements OnInit {
     this.loginService.Login(this.loginViewModel).subscribe({
       next:(response)=>{
 
-        var token=sessionStorage.getItem('currentUser')? JSON.parse(sessionStorage.getItem('currentUser') as string):null;
-        if(token.role=="Employee")
-          this.router.navigateByUrl("/employee/tasks");
+        if(this.loginService.currentUserRole=="Admin")
+            //this.router.navigateByUrl("/admin/dashboard");
+            this.router.navigate(['/admin','dashboard']);
         else
-          //this.router.navigateByUrl("/admin/dashboard");
-          this.router.navigate(['/admin','dashboard']);
+            this.router.navigate(['/employee','tasks']);
       },
       error:(error)=>{
         console.log(error);
